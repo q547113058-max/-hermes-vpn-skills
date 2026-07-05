@@ -62,7 +62,7 @@ config = {
 ## 订阅解码
 
 ```python
-import base64, re, json, urllib.request
+import base64, re, json, urllib.request, os
 
 def fetch_subscription():
     token = os.environ.get("V2RAY_SUBSCRIBE_TOKEN", "").strip()
