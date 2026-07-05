@@ -100,10 +100,17 @@ curl -x http://127.0.0.1:10809 --max-time 8 -s -o /dev/null -w "%{http_code}" ht
 
 这种方法比直接测试所有节点快 3-5 倍，尤其在节点数量 >20 时效果明显。
 
-## 订阅来源
-- fffffl.v2ray.ws（当前使用）：https://ffff.v2ray.ws/api/subscribe?token=<token>&flag=1
-  - 节点数量：30+，含美国 CN2 GIA 节点
-  - 格式：base64 解码后含 vmess:// 和 info 节点（info 无 address 字段需跳过）
+## 订阅来源与安全
+
+- 订阅 URL 和 token 必须来自环境变量、密钥管理器或本地私有配置。
+- 文档、日志、提交和回复中只允许写占位形式，例如 `https://example.com/api/subscribe?token=<token>&flag=1`。
+- 不打印节点服务器、UUID、密码、token 或完整配置。
+- 如果只是检查订阅是否有效，只做拉取、解码、统计和配置校验，不启动代理、不改系统代理。
+- 如果订阅返回 base64 V2Ray 链接而不是 Clash/Mihomo YAML，需要先转换后再交给 Mihomo。
+
+## 与 dw-skills / Codex Mihomo 对齐
+
+当 GitHub、包下载、外部 API 或浏览器登录出现网络延迟、DNS 错误或连接失败时，可以按 `vpn-mihomo-codex` 的规则启用可用节点。命令行任务优先只给当前 shell 设置代理；只有用户明确要求全局流量走代理时才启用系统代理。
 
 ## 工作流程
 1. 下载订阅 → `/tmp/v2ray_sub_<name>.txt`
