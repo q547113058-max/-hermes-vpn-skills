@@ -12,8 +12,11 @@ MAX_CONCURRENT = 10
 
 # === 1. 从订阅获取节点 ===
 def fetch_subscription():
-    token = "8a93d9fe998043beaf748aedc3102e26"
-    url = f"https://ffff.v2ray.ws/api/subscribe?token={token}&flag=1"
+    token = os.environ.get("V2RAY_SUBSCRIBE_TOKEN", "").strip()
+    if not token:
+        raise RuntimeError("Set V2RAY_SUBSCRIBE_TOKEN before running speedtest.py")
+    base_url = os.environ.get("V2RAY_SUBSCRIBE_BASE_URL", "https://ffff.v2ray.ws/api/subscribe").strip()
+    url = f"{base_url}?token={token}&flag=1"
     import urllib.request
     req = urllib.request.Request(url, headers={"User-Agent": "v2rayN"})
     with urllib.request.urlopen(req, timeout=15) as resp:
